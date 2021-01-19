@@ -25,7 +25,7 @@ public function listar(){
    }
 
    public function detalheProduto($id){
-       $query = "select p.idproduto, p.nomeproduto, p.descricao, p.preco, f.foto1, f.foto2,f.foto3,f.foto4  
+       $query = "select p.idproduto, p.tipo, p.nomeproduto, p.descricao, p.preco, f.foto1, f.foto2,f.foto3,f.foto4  
        from produto p inner join foto f on p.idfoto=f.idfoto where idproduto=:id";
        
        $stmt=$this->conexao->prepare($query);
@@ -48,7 +48,7 @@ public function listar(){
    }
    
    public function cadastro(){
-    $query = "insert into produto set nomeproduto=:n, descricao=:d, preco=:p, idfoto=:i";
+    $query = "insert into produto set tipo=:t, nomeproduto=:n, descricao=:d, preco=:p, idfoto=:i";
 
     $stmt = $this->conexao->prepare($query);
 
@@ -56,6 +56,7 @@ public function listar(){
     /*Vamos vincular os dados que vem do app ou navegador com os campos de
     banco de dados
     */
+    $stmt->bindParam(":t",$this->tipo);
     $stmt->bindParam(":n",$this->nomeproduto);
     $stmt->bindParam(":d",$this->descricao);
     $stmt->bindParam(":p",$this->preco);
@@ -71,7 +72,7 @@ public function listar(){
 }
 
 public function alterarProduto(){
-    $query = "update produto set nomeproduto=:n, descricao=:d, preco=:p where idproduto=:id";
+    $query = "update produto set tipo=:t, nomeproduto=:n, descricao=:d, preco=:p where idproduto=:id";
 
     $stmt = $this->conexao->prepare($query);
 
@@ -79,7 +80,7 @@ public function alterarProduto(){
     /*Vamos vincular os dados que veem do app ou navegador com os campos de
     banco de dados
     */
-   
+    $stmt->bindParam(":t",$this->tipo);
     $stmt->bindParam(":n",$this->nomeproduto);
     $stmt->bindParam(":d",$this->descricao);
     $stmt->bindParam(":p",$this->preco);

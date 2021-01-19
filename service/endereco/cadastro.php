@@ -30,13 +30,14 @@ O cliente irá enviar os dado no formato Json. Porém
 $data = json_decode(file_get_contents("php://input"));
 
 #Verificar se os dados vindos do contato estão preenchidos
-if(!empty($data->logradouro) && !empty($data->numero) && !empty($data->complemento) && !empty($data->bairro) && !empty($data->cep)&& !empty($data->idcliente)){
+if(!empty($data->logradouro) && !empty($data->numero) && !empty($data->complemento) && !empty($data->bairro) && !empty($data->cidade) && !empty($data->estado)  && !empty($data->cep)&& !empty($data->idcliente)){
 
-    $endereco->tipo = $data->tipo;
     $endereco->logradouro = $data->logradouro;
     $endereco->numero = $data->numero;
     $endereco->complemento = $data->complemento;
     $endereco->bairro = $data->bairro;
+    $endereco->cidade = $data->cidade;
+    $endereco->estado = $data->estado;
     $endereco->cep = $data->cep;
     $endereco->idcliente = $data->idcliente;
    

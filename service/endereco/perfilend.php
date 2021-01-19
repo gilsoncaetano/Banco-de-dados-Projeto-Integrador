@@ -83,11 +83,12 @@ ao final
         $array_item = array(
             "foto"=>$linha["foto"],
             "idendereco"=>$linha["idendereco"],
-            "tipo"=>$linha["tipo"],
             "logradouro"=>$linha["logradouro"],
             "numero"=>$linha["numero"],
             "complemento"=>$linha["complemento"],
             "bairro"=>$linha["bairro"],
+            "cidade"=>$linha["cidade"],
+            "estado"=>$linha["estado"],
             "cep"=>$linha["cep"],
             "idcliente"=>$linha["idcliente"]
             

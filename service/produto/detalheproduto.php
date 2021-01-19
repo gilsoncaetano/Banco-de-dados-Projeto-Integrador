@@ -82,6 +82,7 @@ ao final
        
         $array_item = array(
             "idproduto"=>$linha["idproduto"],
+            "tipo"=>$linha["tipo"],
             "nomeproduto"=>$linha["nomeproduto"],
             "descricao"=>$linha["descricao"],
             "preco"=>$linha["preco"],

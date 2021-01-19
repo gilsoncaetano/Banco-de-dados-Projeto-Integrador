@@ -4,11 +4,12 @@
 class Endereco{
 
   public $idendereco;
-  public $tipo; 
   public $logradouro; 
   public $numero;
   public $complemento;
   public $bairro;
+  public $cidade;
+  public $estado;
   public $cep;
   public $idcliente;
   
@@ -29,11 +30,12 @@ public function listar(){
 
 public function perfilend($id){
     $query = "select en.idendereco,
-    en.tipo,
     en.logradouro,
     en.numero,
     en.complemento,
     en.bairro,
+    en.cidade,
+    en.estado,
     en.cep,
     en.idcliente,
     cli.foto from endereco en inner join cliente cli on en.idcliente=cli.idcliente where idendereco=:id";
@@ -61,11 +63,12 @@ public function perfilinicial(){
     cl.foto,
     cl.senha,
     en.idendereco,
-    en.tipo,
     en.logradouro,
     en.numero,
     en.complemento,
     en.bairro,
+    en.cidade,
+    en.estado,
     en.cep,
     en.idcliente,
     ar.idarma,
@@ -96,7 +99,7 @@ public function perfilinicial(){
 
 public function cadastro(){
 
-    $query = "insert into endereco set tipo=:t, logradouro=:l, numero=:n, complemento=:c, bairro=:b, cep=:ce,idcliente=:cl";
+    $query = "insert into endereco set logradouro=:l, numero=:n, complemento=:c, bairro=:b, cidade=:cd, estado=:es, cep=:ce,idcliente=:cl";
 
 
     $stmt = $this->conexao->prepare($query);
@@ -104,12 +107,13 @@ public function cadastro(){
     /*Vamos vincular os dados que vem do app ou navegador com os campos de
     banco de dados
     */
-    $stmt->bindParam(":t",$this->tipo);
     $stmt->bindParam(":l",$this->logradouro);
     $stmt->bindParam(":n",$this->numero);
     $stmt->bindParam(":c",$this->complemento);
     $stmt->bindParam(":b",$this->bairro);
     $stmt->bindParam(":ce",$this->cep);
+    $stmt->bindParam(":cd",$this->cidade);
+    $stmt->bindParam(":es",$this->estado);
     $stmt->bindParam(":cl",$this->idcliente);
 
     if($stmt->execute()){
@@ -121,27 +125,23 @@ public function cadastro(){
     }
 }
 
-public function alterarEndereco(){
-    $query = "update endereco set  tipo=:t, logradouro=:l, numero=:n, complemento=:c, bairro=:b, cep=:ce, idcliente=:cli where idendereco=:id";
+    public function alterarEndereco(){
+    $consultaendereco= "update endereco set logradouro=:l, numero=:n, complemento=:c, bairro=:b, cidade=:cd, estado=:es, cep=:cp where idcliente=:idcli";
+    $stmtendereco = $this->conexao->prepare($consultaendereco);
 
-    $stmte = $this->conexao->prepare($query);
-
-  
-    /*Vamos vincular os dados que vem do app ou navegador com os campos de
+    /*Vamos vincular os dados que veem do app ou navegador com os campos de
     banco de dados
     */
-   
-    $stmte->bindParam(":t",$this->tipo);
-    $stmte->bindParam(":l",$this->logradouro);
-    $stmte->bindParam(":n",$this->numero);
-    $stmte->bindParam(":c",$this->complemento);
-    $stmte->bindParam(":b",$this->bairro);
-    $stmte->bindParam(":ce",$this->cep);
-    $stmte->bindParam(":cli",$this->idcliente);
-    $stmte->bindParam(":id",$this->idendereco);
+    $stmtendereco->bindParam(":l",$this->logradouro);
+    $stmtendereco->bindParam(":n",$this->numero);
+    $stmtendereco->bindParam(":c",$this->complemento); 
+    $stmtendereco->bindParam(":b",$this->bairro);
+    $stmtendereco->bindParam(":cd",$this->cidade);
+    $stmtendereco->bindParam(":es",$this->estado);
+    $stmtendereco->bindParam(":cp",$this->cep);
+    $stmtendereco->bindParam(":idcli",$this->idcliente);
     
-
-    if($stmte->execute()){
+    if($stmtendereco->execute()){
         return true;
     }
     else{

@@ -34,11 +34,12 @@ $data = json_decode(file_get_contents("php://input"));
 if(!empty($data->idendereco)){
 
     $endereco->idendereco=$data->idendereco;
-    $endereco->tipo = $data->tipo;
     $endereco->logradouro = $data->logradouro;
     $endereco->numero = $data->numero;
     $endereco->complemento = $data->complemento;
     $endereco->bairro = $data->bairro;
+    $endereco->cidade = $data->cidade;
+    $endereco->estado = $data->estado;
     $endereco->cep = $data->cep;
     $endereco->idcliente = $data->idcliente;
     

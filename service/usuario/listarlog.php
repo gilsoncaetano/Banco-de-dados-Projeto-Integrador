@@ -25,11 +25,14 @@ classe Database com a conexão com o banco deados
 
 include_once "../../config/database.php";
 
+
+header ("Access-Controll-Allow-Methods:POST");
+
 /*
-O arquivo usuario.php foi será incluido para que a classe Usuario 
+O arquivo login.php foi será incluido para que a classe Usuario 
 seja usada. Vale lembrar que esta classe possui o CRUD
 */
-include_once "../../domain/listarlogin.php";
+include_once "../../domain/listardados.php";
 
 /*
 Criamos um objeto chamado $database. É uma instância da classe Database 
@@ -51,11 +54,22 @@ $db = $database->getConnection();
 Vamos fazer uma instância da classe usuário para ter acesso a todo
 o seu conteúdo.
 */
-$id=$_GET['idcliente'];
 
 $usuario = new Listar($db);
 
-$rs = $usuario->listarLog($id);
+$data = json_decode(file_get_contents("php://input"));
+
+$usuario->email = $data->email;
+$usuario->senha = $data->senha;
+
+$rs = $usuario->listar();
+
+/*
+Vamos construir uma estrutura exibir os dados do banco no formato de 
+json.
+Como esses dados estão dispostos em linhas e colunas, nós precisaremos
+criar uma array para exibir todos os dados corretamente
+*/
 
 if($rs->rowCount()>0){
     $usuario_arr["saida"] = array();
@@ -72,33 +86,29 @@ ao final
         o comando extract é capaz de separar de forma mais simples os 
         campos da tabela usuarios
         */
+        extract($linha);
         $array_item = array(
-            "foto"=>$linha ["foto"],
-             "idcliente"=>$linha ["idcliente"],
-             "nomecliente"=> $linha ["nomecliente"],
-             "cpf"=> $linha ["cpf"],
-             "sexo"=> $linha ["sexo"],
-             "email"=>$linha ["email"],
-             "senha"=>$linha ["senha"],
-             "telefone"=>$linha ["telefone"],
-             "idendereco"=>$linha ["idendereco"],
-             "tipo"=> $linha ["tipo"],
-             "logradouro"=>$linha ["logradouro"],
-             "numero"=> $linha ["numero"],
-             "complemento"=>$linha ["complemento"],
-             "bairro"=>$linha ["bairro"],
-             "cep"=>$linha ["cep"],
+           
+             "foto"=>$foto,
+             "idcliente"=>$idcliente,
+             "nomecliente"=> $nomecliente,
+             "cpf"=> $cpf,
+             "sexo"=> $sexo,
+             "email"=>$email,
+             "senha"=>$senha,
+             "telefone"=>$telefone,
+             
         );
         array_push($usuario_arr["saida"],$array_item);
-
     }
-
     header("HTTP/1.0 200");
     echo json_encode($usuario_arr);
-}
+ }
+
 else{
     header("HTTP/1.0 400");
-    echo json_encode(array("mensagem"=>"Não há usuários cadastrados"));
+    echo json_encode(array("mensagem"=>"Nome de usuário ou senha incorreto"));
+
 }
 
 ?>

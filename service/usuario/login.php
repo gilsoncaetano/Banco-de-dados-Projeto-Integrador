@@ -89,7 +89,7 @@ ao final
         extract($linha);
         $array_item = array(
            
-              "foto"=>$foto,
+             "foto"=>$foto,
              "idcliente"=>$idcliente,
              "nomecliente"=> $nomecliente,
              "cpf"=> $cpf,
@@ -97,70 +97,25 @@ ao final
              "email"=>$email,
              "senha"=>$senha,
              "telefone"=>$telefone,
-            //  "idendereco"=>$idendereco,
-            //  "tipo"=> $tipo,
-            //  "logradouro"=>$logradouro,
-            //  "numero"=> $numero,
-            //  "complemento"=>$complemento,
-            //  "bairro"=>$bairro,
-            //  "cep"=>$cep,
-            //  "idarma"=>$idarma,
-            //  "cpfarma"=>$cpfarma,
-            //  "funcao"=>$funcao,
-            //  "sigma"=>$sigma,
-            //  "arma"=>$arma,
-            //  "fabricante"=>$fabricante,
-            //  "calibre"=>$calibre,
-            //  "modelo"=>$modelo,
-            //  "cano"=>$cano,
-            //  "capacidade"=>$capacidade,
-            //  "funcionamento"=>$funcionamento,
-            //  "notafiscal"=>$notafiscal,
-            //  "datafiscal"=>$datafiscal,
-            //  "orgaoauto"=>$orgaoauto,
-            //  "codigoauto"=>$codigoauto
-        );
+             "idendereco"=>$idendereco,
+             "logradouro"=>$logradouro,
+             "numero"=> $numero,
+             "complemento"=>$complemento,
+             "bairro"=>$bairro,
+             "cidade"=> $cidade,
+             "estado"=> $estado,
+             "cep"=>$cep,
+            );
         array_push($usuario_arr["saida"],$array_item);
     }
     header("HTTP/1.0 200");
     echo json_encode($usuario_arr);
  }
-// else{
-//     if($rs->rowCount()>0){
-//     $usuario_arr["saida"] = array();
-// /*
-// A estrutra while(equanto) realiza a busca de todos os usuários cadastrados
-// até chegar ao final da tabela e tras os dados para fetch array organizar 
-// em formato de array
-// Assim será mais fácil de adcionar no array de usuarios para apresentar 
-// ao final
-// */
-//     while($linha = $rs->fetch(PDO::FETCH_ASSOC)){
 
-//         /*
-//         o comando extract é capaz de separar de forma mais simples os 
-//         campos da tabela usuarios
-//         */
-//         extract($linha);
-//         $array_item = array(
-           
-//               "foto"=>$foto,
-//              "idcliente"=>$idcliente,
-//              "nomecliente"=> $nomecliente,
-//              "cpf"=> $cpf,
-//              "sexo"=> $sexo,
-//              "email"=>$email,
-//              "telefone"=>$telefone,
-
-//         );
-//         array_push($usuario_arr["saida"],$array_item);
-//     }
-//     header("HTTP/1.0 200");
-//     echo json_encode($usuario_arr);
-// }
 else{
     header("HTTP/1.0 400");
     echo json_encode(array("mensagem"=>"Nome de usuário ou senha incorreto"));
-//}
+
 }
+
 ?>

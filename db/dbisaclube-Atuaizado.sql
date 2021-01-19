@@ -16,21 +16,28 @@ senha varchar (250) not null
 select * from cliente;
 
 insert into cliente(nomecliente, cpf, sexo,email,telefone,foto,senha)
-values('Dalila','2075454845','M','dalila@gmail.com','11 97989-9565','dalila.png',md5('123'));
+values('Amber','207545484755','Feminina','amber@gmail.com','11 97989-8877','Amber.png',md5('123')),
+('Marcela','207545400','Femenina','marcela@gmail.com','11 97989-8899','marcela.png',md5('123')),
+('Tay','2075454845','Masculino','tay@gmail.com','11 97989-7766','tay.png',md5('123'));
 
 create table endereco(
 idendereco int auto_increment primary key,
-tipo varchar(10) not null,
 logradouro varchar(100) not null,
 numero varchar(10) not null,
 complemento varchar(20) not null,
 bairro varchar(50) not null,
+cidade varchar(20) not null,
+estado varchar(5) not null,
 cep varchar(10) not null,
 idcliente int not null
 )engine Innodb;
+select * from endereco;
 
-insert into endereco(tipo, logradouro, numero, complemento,bairro, cep,idcliente)
-values('Rua','cafe','150','Casa dos fundos','Jardim','08523100','1');
+insert into endereco(logradouro, numero, complemento,bairro, cidade,cep,idcliente)
+values('Rua','cafe','150','Casa dos fundos','Jardim', 'guarulhos','SP','08523100','7'),
+('Rua','Três','50','Casa','Jardim','08523-200','10'),
+('TV',' Combe','760','Casa C3','Jardim Ipe','08523100','13')
+;
 
 create table armasigma(
 idarma int auto_increment primary key,
@@ -50,6 +57,7 @@ orgaoauto varchar(20) not null,
 codigoauto varchar(20) not null,
 idcliente int not null
 )engine InnoDB;
+
 select * from armasigma;
 insert into armasigma(cpfarma,funcao,sigma,arma,fabricante,calibre,modelo,cano,capacidade,funcionamento,notafiscal,datafiscal,orgaoauto,codigoauto,idcliente)
 value('02316548-89','Atirador','Exercito','Pistola','Imbel','380 GC','MD1 LX','01','19+1','Semeautomatica','32659874','20/06/2020','Exercito','659874512','1');
@@ -63,6 +71,7 @@ descricao text not null,
 preco decimal(10,2) not null,
 idfoto int not null
 )engine InnoDB;
+select * from produto;
 
 insert into produto(nomeproduto, descricao, preco, idfoto)
 values('Pistola IMBEL 40 GC MD7','Calibre: .40 S&W
@@ -72,8 +81,6 @@ Peso sem carregador: 1.200 g
 Funcionamento: semiautomático em ação simples.
 ',5997.56,1);
 
-select * from produto;
-
 create table foto(
 idfoto int auto_increment primary key,
 foto1 varchar(200) not null,
@@ -81,6 +88,7 @@ foto2 varchar(200) not null,
 foto3 varchar(200) not null,
 foto4 varchar(200) not null
 )engine InnoDB;
+
 select * from foto;
 insert into foto(foto1,foto2,foto3,foto4)
 values ('pistola1.png','pistola2.png','pistola3.png','pistola4.png');
@@ -91,6 +99,7 @@ idpedido int auto_increment primary key,
 idcliente int not null,
 datapedido timestamp default current_timestamp()
 )engine InnoDB;
+
 insert into pedido(idcliente) 
 values(1);
 
@@ -102,6 +111,7 @@ idpedido int not null,
 idproduto int not null,
 quantidade int default 1 not null 
 )engine InnoDB;
+
 insert into itenspedido(idpedido,idproduto,quantidade)
 values(1,1,3);
 select * from itenspedido;

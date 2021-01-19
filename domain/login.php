@@ -13,11 +13,12 @@ class Login{
     public $telefone;
     public $senha;
     public $idendereco;
-    public $tipo;
     public $logradouro;
     public $numero;
     public $complemento;
     public $bairro;
+    public $cidade;
+    public $estado;
     public $cep;
     public $idarma;
     public $cpfarma; 
@@ -45,16 +46,27 @@ class Login{
 public function login(){
    
        if ($query = "select
-        cl.idcliente,
-        cl.nomecliente,
-        cl.cpf,
-        cl.sexo,
-        cl.email,
-        cl.telefone,
-        cl.foto,
-        cl.senha
-        from cliente cl 
+       cl.idcliente,
+       cl.nomecliente,
+       cl.cpf,
+       cl.sexo,
+       cl.email,
+       cl.telefone,
+       cl.foto,
+       cl.senha,
+       en.idendereco,
+       en.idendereco,
+       en.logradouro,
+       en.numero,
+       en.complemento,
+       en.bairro,
+       en.cidade,
+       en.estado,
+       en.cep
+       from endereco en inner join cliente cl on en.idcliente=cl.idcliente
         where email=:e and senha=:s");
+
+        
     
         $stmt = $this->conexao->prepare($query);
     

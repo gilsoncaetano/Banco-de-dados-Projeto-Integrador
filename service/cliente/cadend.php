@@ -13,12 +13,12 @@ header("Access-Control-Allow-Methods:POST");
 
 include_once "../../config/database.php";
 
-include_once "../../domain/Pagamento.php";
+include_once "../../domain/listardados.php";
 
 $database = new Database();
 $db = $database->getConnection();
 
-$pagamento = new Pagamento($db);
+$cliente = new Cadend($db);
 
 /*
 O cliente irá enviar os dado no formato Json. Porém
@@ -29,19 +29,29 @@ O cliente irá enviar os dado no formato Json. Porém
 */
 $data = json_decode(file_get_contents("php://input"));
 
-#Verificar se os dados vindos do produto estão preenchidos
-if(!empty($data->idcliente)){
+#Verificar se os dados vindos do cliente estão preenchidos
+if(!empty($data->nomecliente) && !empty($data->cpf)&& !empty($data->sexo)&& !empty($data->email)&& !empty($data->telefone)&& !empty($data->senha)){
 
-    $pagamento->tipo=$data->tipo;
-    $pagamento->descricao=$data->descricao;
-    $pagamento->valor=$data->valor;
-    $pagamento->parcelas=$data->parcelas;
-    $pagamento->valorparcela=$data->valorparcela;
-    $pagamento->idcliente=$data->idcliente;
+    $cliente->nomecliente = $data->nomecliente;
+    $cliente->cpf = $data->cpf;
+    $cliente->sexo = $data->sexo;
+    $cliente->email = $data->email;
+    $cliente->telefone = $data->telefone;
+    $cliente->foto = $data->foto;
+    $cliente->senha = $data->senha;
+    $cliente->logradouro = $data->logradouro;
+    $cliente->numero = $data->numero;
+    $cliente->complemento = $data->complemento;
+    $cliente->bairro = $data->bairro;
+    $cliente->cidade = $data->cidade;
+    $cliente->estado = $data->estado;
+    $cliente->cep = $data->cep;
+    
+     
 
-    if($pagamento->cadastro()){
+    if($cliente->cadastro()){
         header("HTTP/1.0 201");
-        echo json_encode(array("mensagem"=>"pagamento cadastrado com suceso!"));
+        echo json_encode(array("mensagem"=>"cliente cadastrado com sucesso!"));
     }
     else{
         header("HTTP/1.0 400");
@@ -52,7 +62,5 @@ else{
     header("HTTP/1.0 400");
     echo json_encode(array("mensagem"=>"Você precisa preencher todos os campos"));
 }
-
-
 
 ?>
